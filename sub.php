@@ -6,32 +6,36 @@ require_once 'query.php';
 
 $h = $_GET['h'];
 $h2 = $h == 2 ? '1H2016' : '2H2016 (FC)';
-$fileName = 'templates/raw.xlsx'; 
+$disciplineName = $_GET['d']; //'Creative';
+$fileName = 'templates/'.$disciplineName.'.xlsx'; 
 $reader = PHPExcel_IOFactory::createReader('Excel2007');
-$excel = $reader->load($fileName); 
-$sheet = $excel->setActiveSheetIndex(0);
+$excel = $reader->load($fileName);
 
-foreach ($db->query(Query::agency()) as $r) {
-    $sheet->setCellValueByColumnAndRow($r['seq'], 1, $r['id']);
-    $sheet->setCellValueByColumnAndRow($r['seq'], 2, $r['name']);
-}
-
-foreach ($db->query(Query::disciplineConfig()) as $r) {
+foreach ($db->query(Query::subDisciplineByDisciplineName(2, $disciplineName)) as $r) {
     $sheet = $excel->setActiveSheetIndexByName($r['name']);
 
     foreach ($db->query(Query::agency()) as $r1) {
         $sheet->setCellValueByColumnAndRow($r1['seq'], 1, $r1['id']);
         $sheet->setCellValueByColumnAndRow($r1['seq'], 2, $r1['name']);
+        $sheet->setCellValueByColumnAndRow($r1['seq'], 61, $r1['id']);
+        $sheet->setCellValueByColumnAndRow($r1['seq'], 62, $r1['name']);
     }
 
-    foreach ($db->query(Query::disciplineData($h, $r['name'])) as $r1) {
+    foreach ($db->query(Query::subDisciplineData($h, $disciplineName, $r['name'])) as $r1) {
+        $sheet->setCellValueByColumnAndRow($r1['col'], $r1['row'], $r1['percent']);
+    }
+
+    foreach ($db->query(Query::disciplineData2($h, $disciplineName)) as $r1) {
         $sheet->setCellValueByColumnAndRow($r1['col'], $r1['row'], $r1['value']);
     }
 }
 
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'); 
-header('Content-Disposition: attachment;filename="RAW Disciplines Data by 56 Cat '.$h2.'.xlsx"'); 
+header('Content-Disposition: attachment;filename="RAW '.$disciplineName.' '.$h2.'.xlsx"'); 
 header('Cache-Control: max-age=0'); 
 $writer = PHPExcel_IOFactory::createWriter($excel, 'Excel2007'); 
 $writer->save('php://output');
 ?>
+
+
+
