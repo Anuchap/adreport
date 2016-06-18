@@ -1,12 +1,12 @@
 <?php
 require_once 'lib/PHPExcel.php';
 include 'lib/PHPExcel/IOFactory.php';
-require_once 'db.php';
+require_once 'config.php';
 require_once 'query.php';
 
 $h = $_GET['h'];
 $h2 = $h == 2 ? '1H2016' : '2H2016 (FC)';
-$fileName = 'templates/raw.xlsx'; 
+$fileName = ROOT_DIR.'/templates/raw.xlsx'; 
 $reader = PHPExcel_IOFactory::createReader('Excel2007');
 $excel = $reader->load($fileName); 
 $sheet = $excel->setActiveSheetIndex(0);
