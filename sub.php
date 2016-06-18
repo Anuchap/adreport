@@ -10,6 +10,12 @@ $disciplineName = $_GET['d']; //'Creative';
 $fileName = 'templates/'.$disciplineName.'.xlsx'; 
 $reader = PHPExcel_IOFactory::createReader('Excel2007');
 $excel = $reader->load($fileName);
+$sheet = $excel->setActiveSheetIndexByName('Total');
+
+foreach ($db->query(Query::agency()) as $r) {
+    $sheet->setCellValueByColumnAndRow($r['seq'], 1, $r['id']);
+    $sheet->setCellValueByColumnAndRow($r['seq'], 2, $r['name']);
+}
 
 foreach ($db->query(Query::subDisciplineByDisciplineName(2, $disciplineName)) as $r) {
     $sheet = $excel->setActiveSheetIndexByName($r['name']);
