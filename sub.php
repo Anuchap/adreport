@@ -17,6 +17,8 @@ try  {
     foreach ($db->query(Query::agency()) as $r) {
         $sheet->setCellValueByColumnAndRow($r['seq'], 1, $r['id']);
         $sheet->setCellValueByColumnAndRow($r['seq'], 2, $r['name']);
+        $sheet->setCellValueByColumnAndRow($r['seq'], 61, $r['id']);
+        $sheet->setCellValueByColumnAndRow($r['seq'], 62, $r['name']);
     }
 
     foreach ($db->query(Query::subDisciplineByDisciplineName(2, $disciplineName)) as $r) {
@@ -31,11 +33,12 @@ try  {
 
         foreach ($db->query(Query::subDisciplineData($h, $disciplineName, $r['name'])) as $r1) {
             $sheet->setCellValueByColumnAndRow($r1['col'], $r1['row'], $r1['percent']);
+            $sheet->setCellValueByColumnAndRow($r1['col'], $r1['row2'], ($r1['value'] * $r1['percent']));
         }
 
-        foreach ($db->query(Query::disciplineData2($h, $disciplineName)) as $r1) {
-            $sheet->setCellValueByColumnAndRow($r1['col'], $r1['row'], $r1['value']);
-        }
+        // foreach ($db->query(Query::disciplineData2($h, $disciplineName)) as $r1) {
+        //     $sheet->setCellValueByColumnAndRow($r1['col'], $r1['row'], $r1['value']);
+        // }
     }
 
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'); 

@@ -32,7 +32,14 @@ class Query {
     }
 
     public static function subDisciplineData($sheet, $disciplineName, $subDisciplineName) {
-        return "select a.seq col, c.seq row, s.percent from sub_discipline s
+        // return "select a.seq col, c.seq row, s.percent from sub_discipline s
+        //     left join discipline d on s.discipline_id = d.id
+        //     left join agency a on d.agency_id = a.id
+        //     left join category_config c on d.category_name = c.name
+        //     where d.sheet = ".$sheet." and d.name = '".$disciplineName."' and s.name = '".$subDisciplineName."'";
+
+        return "select a.seq col, c.seq row, s.percent, c.seq + 60 row2, d.value 
+            from sub_discipline s
             left join discipline d on s.discipline_id = d.id
             left join agency a on d.agency_id = a.id
             left join category_config c on d.category_name = c.name
