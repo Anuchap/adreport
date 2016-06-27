@@ -46,6 +46,7 @@ try  {
     header('Cache-Control: max-age=0'); 
     $writer = PHPExcel_IOFactory::createWriter($excel, 'Excel2007'); 
     $writer->save('php://output');
+	exit();
 
 } catch (Exception $e) {
     echo 'Caught exception: ',  $e->getMessage(), "\n";
