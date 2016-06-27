@@ -45,5 +45,11 @@ class Query {
             left join category_config c on d.category_name = c.name
             where d.sheet = ".$sheet." and d.name = '".$disciplineName."' and s.name = '".$subDisciplineName."'";
     }
+
+    public static function part2($qno) {
+        return "select b.id, b.name, a.answer, a.optional, b.seq + 1 row from 
+            answer a left join agency b on a.agency_id = b.id   
+            where a.qno = ".$qno;
+    }
 }
 ?>

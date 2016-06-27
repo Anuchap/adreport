@@ -23,6 +23,7 @@ require_once 'session.php';
         <li><a href="sub.php?h=3&d=VDO">RAW VDO 2H2016 (FC)</a></li>
         <li><a href="sub.php?h=2&d=YouTube">RAW YouTube 1H2016</a></li>
         <li><a href="sub.php?h=3&d=YouTube">RAW YouTube 2H2016 (FC)</a></li>
+        <li><a href="part2.php">Part2</a></li>
     </ul>
 </body>
 </html>
