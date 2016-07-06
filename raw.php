@@ -7,7 +7,7 @@ require_once 'query.php';
 try  {
 
     $h = $_GET['h'];
-    $h2 = $h == 2 ? '1H2016' : '2H2016 (FC)';
+    $h2 = $h == 1 ? '1H2016' : '2H2016 (FC)';
     $fileName = ROOT_DIR.'/templates/raw.xlsx'; 
     $reader = PHPExcel_IOFactory::createReader('Excel2007');
     $excel = $reader->load($fileName); 
